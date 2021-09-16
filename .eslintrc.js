@@ -24,6 +24,7 @@ module.exports = {
         ],
         'react/react-in-jsx-scope': 'off',
         'jsx-ally/anchor-is-valid': 'off',
+        'react/jsx-props-no-spreading': 'off',
         'react/no-unknown-property': [0, { ignore: 0 }],
     },
 };
