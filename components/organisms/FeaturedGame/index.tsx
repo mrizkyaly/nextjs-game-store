@@ -1,6 +1,17 @@
+import { useEffect, useState } from 'react';
 import GameItem from '../../molecules/GameItem';
+import axios from 'axios';
 
 export default function FeaturedGame() {
+    const [gameList, setGameList] = useState([]);
+
+    useEffect(async () => {
+        const response = await axios.get(
+            'https://bwa-storegg-aly.herokuapp.com/api/v1/players/landingpage'
+        );
+        console.log('Data', response.data);
+        setGameList(response.data.data);
+    }, []);
     return (
         <section className='featured-game pt-50 pb-50'>
             <div className='container-fluid'>
@@ -12,31 +23,16 @@ export default function FeaturedGame() {
                     className='d-flex flex-row flex-lg-wrap overflow-setting justify-content-lg-between gap-lg-3 gap-4'
                     data-aos='fade-up'
                 >
-                    <GameItem
-                        title='Super Mechs'
-                        category='Mobile'
-                        thumbnail='/img/Thumbnail-1.png'
-                    />
-                    <GameItem
-                        title='Call of Duty: Modern'
-                        category='Mobile'
-                        thumbnail='/img/Thumbnail-2.png'
-                    />
-                    <GameItem
-                        title='Mobile Legends'
-                        category='Mobile'
-                        thumbnail='/img/Thumbnail-3.png'
-                    />
-                    <GameItem
-                        title='Clash of Clans'
-                        category='Mobile'
-                        thumbnail='/img/Thumbnail-4.png'
-                    />
-                    <GameItem
-                        title='Valorant'
-                        category='Desktop'
-                        thumbnail='/img/Thumbnail-5.png'
-                    />
+                    {gameList.map((item) => {
+                        return (
+                            <GameItem
+                                key={item._id}
+                                title={item.name}
+                                category={item.category.name}
+                                thumbnail={`https://bwa-storegg-aly.herokuapp.com/uploads/${item.thumbnail}`}
+                            />
+                        );
+                    })}
                 </div>
             </div>
         </section>
