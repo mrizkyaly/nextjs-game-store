@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import cx from 'classnames';
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 export default function SignUpForm() {
     const [name, setName] = useState('');
