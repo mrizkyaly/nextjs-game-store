@@ -1,10 +1,17 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useState } from 'react';
+import { setSignUp } from '../services/auth';
 import { getGameCategory } from '../services/player';
 
 export default function SignUpPhoto() {
     const [categories, setCategories] = useState([]);
     const [favorite, setFavorite] = useState('');
+    const [image, setIamge] = useState('');
+    const [imagePreview, setIamgePreview] = useState(null);
+    const [localForm, setLocalForm] = useState({
+        name: '',
+        email: '',
+    });
 
     const getGameCategoryAPI = useCallback(async () => {
         const data = await getGameCategory();
@@ -18,8 +25,31 @@ export default function SignUpPhoto() {
         getGameCategoryAPI();
     }, []);
 
-    const onSubmit = () => {
+    useEffect(() => {
+        const getLocalForm = localStorage.getItem('user-form');
+        setLocalForm(JSON.parse(getLocalForm));
+    }, []);
+
+    const onSubmit = async () => {
         console.log('Favorite:', favorite);
+        console.log('Image', image);
+
+        const getLocalForm = await localStorage.getItem('user-form');
+        const form = JSON.parse(getLocalForm);
+        const data = new FormData();
+
+        data.append('image', image);
+        data.append('email', form.email);
+        data.append('name', form.name);
+        data.append('password', form.password);
+        data.append('username', form.name);
+        data.append('phoneNumber', '089835388890');
+        data.append('role', 'user');
+        data.append('status', 'Y');
+        data.append('status', favorite);
+
+        const result = await setSignUp(data);
+        console.log('Result : ', result);
     };
 
     return (
@@ -31,25 +61,42 @@ export default function SignUpPhoto() {
                             <div className='mb-20'>
                                 <div className='image-upload text-center'>
                                     <label htmlFor='avatar'>
-                                        <Image
-                                            src='/icon/upload.svg'
-                                            width={120}
-                                            height={120}
-                                        />
+                                        {imagePreview ? (
+                                            <img
+                                                src={imagePreview}
+                                                className='img-upload'
+                                                alt='upload'
+                                            />
+                                        ) : (
+                                            <Image
+                                                src='/icon/upload.svg'
+                                                width={120}
+                                                height={120}
+                                                alt='upload'
+                                            />
+                                        )}
                                     </label>
                                     <input
                                         id='avatar'
                                         type='file'
                                         name='avatar'
                                         accept='image/png, image/jpeg'
+                                        onChange={(event) => {
+                                            console.log(event.target.files);
+                                            const img = event.target.files[0];
+                                            setIamgePreview(
+                                                URL.createObjectURL(img)
+                                            );
+                                            return setIamge(img);
+                                        }}
                                     />
                                 </div>
                             </div>
                             <h2 className='fw-bold text-xl text-center color-palette-1 m-0'>
-                                Shayna Anne
+                                {localForm.name}
                             </h2>
                             <p className='text-lg text-center color-palette-1 m-0'>
-                                shayna@anne.com
+                                {localForm.email}
                             </p>
                             <div className='pt-50 pb-50'>
                                 <label
@@ -70,7 +117,11 @@ export default function SignUpPhoto() {
                                 >
                                     {categories.map((category) => {
                                         return (
-                                            <option value={category._id}>
+                                            <option
+                                                key={category._id}
+                                                value={category._id}
+                                                selected
+                                            >
                                                 {category.name}
                                             </option>
                                         );
