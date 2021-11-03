@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-    reactStrictMode: true,
-    images: {
-        domains: ['api-bwa-storegg.herokuapp.com'],
-    },
+  reactStrictMode: true,
+  images: {
+    domains: ['bwa-storegg-aly.herokuapp.com'],
+  },
 };
