@@ -1,11 +1,10 @@
-import { useState } from 'react';
+import Cookies from 'js-cookie';
 import Link from 'next/link';
-import { ToastContainer, toast } from 'react-toastify';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { setLogin } from '../../../services/auth';
-import { useRouter } from 'next/router';
-import jwt_decode from 'jwt-decode';
-import Cookies from 'js-cookie';
 
 export default function SignInForm() {
   const [email, setEmail] = useState('');
@@ -28,10 +27,8 @@ export default function SignInForm() {
         toast.success('Login Berhasil');
         const { token } = response.data;
         const tokenBase64 = btoa(token);
-
         Cookies.set('token', tokenBase64, { expires: 1 });
-
-        // router.push('/');
+        router.push('/');
       }
     }
   };
