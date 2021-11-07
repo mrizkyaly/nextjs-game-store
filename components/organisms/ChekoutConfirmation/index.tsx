@@ -16,7 +16,9 @@ export default function ChekoutConfirmation() {
 
     if (!checkbox) {
       toast.error('Pastikan anda telah melakukan transfer pembayaran');
+      return;
     }
+
     const data = {
       voucher: dataItem._id,
       nominal: dataTopUp.nominalItem._id,
@@ -31,8 +33,8 @@ export default function ChekoutConfirmation() {
     if (response.error) {
       toast.error(response.message);
     } else {
-      toast.success('Checkout Berhasil');
       router.push('/complete-checkout');
+      toast.success('Checkout Berhasil');
     }
   };
   return (

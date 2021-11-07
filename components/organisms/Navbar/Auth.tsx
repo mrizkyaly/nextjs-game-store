@@ -60,7 +60,7 @@ export default function Auth() {
           >
             <li>
               <Link href='/member'>
-                <a className='dropdown-item text-lg color-palette-2' href='#'>
+                <a className='dropdown-item text-lg color-palette-2'>
                   My Profile
                 </a>
               </Link>
