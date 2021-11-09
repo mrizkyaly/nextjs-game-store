@@ -4,7 +4,7 @@ import {
   HistoryTransactionTypes,
   TopUpCategoriesTypes,
 } from '../../../services/data-types';
-import { getMemberOverview } from '../../../services/player';
+import { getMemberOverview } from '../../../services/member';
 import Categori from './Categori';
 import TableRow from './TableRow';
 
@@ -18,7 +18,6 @@ export default function OverviewContent() {
     if (response.error) {
       toast.error(response.message);
     } else {
-      console.log('data: ', response.data);
       setCount(response.data.count);
       setData(response.data.data);
     }
