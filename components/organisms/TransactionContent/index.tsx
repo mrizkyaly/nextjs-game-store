@@ -4,6 +4,7 @@ import { getMemberTransactions } from '../../../services/member';
 import TableRow from '../TransactionContent/TableRow';
 import ButtonTab from './ButtonTab';
 import NumberFormat from 'react-number-format';
+import { HistoryTransactionTypes } from '../../../services/data-types';
 
 export default function TransactionContent() {
   const [total, setTotal] = useState(0);
@@ -94,7 +95,7 @@ export default function TransactionContent() {
                 </tr>
               </thead>
               <tbody id='list_status_item'>
-                {transactions.map((transaction) => (
+                {transactions.map((transaction: HistoryTransactionTypes) => (
                   <TableRow
                     image={`${IMG}/${transaction.historyVoucherTopup.thumbnail}`}
                     title={transaction.historyVoucherTopup.gameName}
@@ -102,6 +103,7 @@ export default function TransactionContent() {
                     item={`${transaction.historyVoucherTopup.coinQuantity} ${transaction.historyVoucherTopup.coinName}`}
                     price={transaction.value}
                     status={transaction.status}
+                    id={transaction._id}
                   />
                 ))}
               </tbody>
