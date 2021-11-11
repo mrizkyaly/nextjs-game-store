@@ -21,12 +21,15 @@ export default function Profile() {
       setUser(userFromPayload);
     }
   }, []);
+
+  const IMG = process.env.NEXT_PUBLIC_IMG;
+
   return (
     <div className='user text-center pb-50 pe-30'>
       <img
-        src={user.avatar}
-        width='90'
-        height='90'
+        src={`${IMG}/${user.avatar}`}
+        width='100'
+        height='100'
         className='img-fluid mb-20'
         style={{ borderRadius: '100%' }}
       />
