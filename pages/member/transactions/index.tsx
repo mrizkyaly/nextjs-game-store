@@ -1,7 +1,5 @@
-import jwtDecode from 'jwt-decode';
 import SideBar from '../../../components/organisms/SideBar';
 import TransactionContent from '../../../components/organisms/TransactionContent';
-import { JWTPayloadTypes, UserTypes } from '../../../services/data-types';
 
 export default function Transactions() {
   return (

@@ -2,20 +2,25 @@ import Cookies from 'js-cookie';
 import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import Input from '../../components/atoms/Input';
 import SideBar from '../../components/organisms/SideBar';
 import { JWTPayloadTypes, UserTypes } from '../../services/data-types';
-import { updateProfile } from '../../services/member';
+
+interface UserStateTypes {
+  id: string;
+  username: string;
+  email: string;
+  avatar: any;
+}
 
 export default function EditProfile() {
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<UserStateTypes>({
     id: '',
     username: '',
     email: '',
     avatar: '',
   });
-  const [imagePreview, setImagePreview] = useState();
+  const [imagePreview, setImagePreview] = useState('/');
   const router = useRouter();
 
   useEffect(() => {
@@ -31,20 +36,17 @@ export default function EditProfile() {
   const IMG = process.env.NEXT_PUBLIC_IMG;
 
   const onSubmit = async () => {
-    const data = new FormData();
-
-    data.append('image', user.avatar);
-    data.append('username', user.username);
-
-    const response = await updateProfile(data, user.id);
-
-    if (response.error) {
-      toast.error(response.message);
-    } else {
-      Cookies.remove('token');
-      router.push('/sign-in');
-      toast.success('Update Profile Berhasil');
-    }
+    // const data = new FormData();
+    // data.append('image', user.avatar);
+    // data.append('username', user.username);
+    // const response = await updateProfile(data, user.id);
+    // if (response.error) {
+    //   toast.error(response.message);
+    // } else {
+    //   Cookies.remove('token');
+    //   router.push('/sign-in');
+    //   toast.success('Update Profile Berhasil');
+    // }
   };
 
   return (
@@ -58,9 +60,9 @@ export default function EditProfile() {
               <div className='photo d-flex'>
                 <div className='image-upload'>
                   <label htmlFor='avatar'>
-                    {imagePreview ? (
+                    {imagePreview === '/' ? (
                       <img
-                        src={imagePreview}
+                        src={`${IMG}/${user.avatar}`}
                         alt='icon upload'
                         width={90}
                         height={90}
@@ -68,7 +70,7 @@ export default function EditProfile() {
                       />
                     ) : (
                       <img
-                        src={`${IMG}/${user.avatar}`}
+                        src={imagePreview}
                         alt='icon upload'
                         width={90}
                         height={90}
@@ -82,7 +84,7 @@ export default function EditProfile() {
                     name='avatar'
                     accept='image/png, image/jpeg'
                     onChange={(event) => {
-                      const img = event.target.files[0];
+                      const img = event.target.files![0];
                       setImagePreview(URL.createObjectURL(img));
                       return setUser({
                         ...user,

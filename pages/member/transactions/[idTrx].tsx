@@ -26,15 +26,15 @@ interface GetServerSideProps {
     cookies: {
       token: string;
     };
-    params: {
-      idTrx: string;
-    };
+  };
+  params: {
+    idTrx: string;
   };
 }
 
 export async function getServerSideProps({ req, params }: GetServerSideProps) {
-  const { token } = req.cookies;
   const { idTrx } = params;
+  const { token } = req.cookies;
 
   if (!token) {
     return {
