@@ -12,7 +12,6 @@ export default function TransactionDetailContent(
 
   const IMG = process.env.NEXT_PUBLIC_IMG;
 
-  console.log('data', data.historyPaymnet);
   return (
     <main className='main-wrapper'>
       <div className='ps-lg-0'>

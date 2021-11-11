@@ -101,7 +101,6 @@ interface GetStaticProps {
 export async function getStaticProps({ params }: GetStaticProps) {
   const { id } = params;
   const data = await getDetailVoucher(id);
-  console.log('Data:', data);
 
   return {
     props: {

@@ -16,7 +16,6 @@ export default function Profile() {
       const jwtToken = atob(token);
       const payload: JWTPayloadTypes = jwtDecode(jwtToken);
       const userFromPayload: UserTypes = payload.player;
-      console.log(userFromPayload);
 
       setUser(userFromPayload);
     }

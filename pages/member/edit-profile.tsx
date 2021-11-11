@@ -31,7 +31,6 @@ export default function EditProfile() {
   const IMG = process.env.NEXT_PUBLIC_IMG;
 
   const onSubmit = async () => {
-    console.log('data', user);
     const data = new FormData();
 
     data.append('image', user.avatar);
